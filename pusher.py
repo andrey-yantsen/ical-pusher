@@ -78,7 +78,7 @@ if __name__ == '__main__':
 			intersects = component['DTSTART'].dt >= period_start and component['DTSTART'].dt < period_end
 
 			if not intersects and component.get('DTEND'):
-				intersects = (component['DTSTART'].dt <= period_start and component['DTEND'].dt > period_start + timedelta(days=1)) \
+				intersects = (component['DTSTART'].dt <= period_start and component['DTEND'].dt > period_start) \
 							or (component['DTSTART'].dt < period_end and component['DTEND'].dt >= period_end)
 
 			if not intersects:
