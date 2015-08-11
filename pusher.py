@@ -11,11 +11,7 @@ def get_calendar(url):
 	return cal
 
 def send_slack_msg(msg):
-	post(args.callback_url, json={
-		'method': 'post',
-		'contentType': 'json',
-		'payload': msg
-	})
+	post(args.callback_url, json=msg)
 
 def date_to_str(d):
 	today = date.today()
