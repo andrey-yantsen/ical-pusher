@@ -84,34 +84,16 @@ if __name__ == '__main__':
 			if not intersects:
 				continue
 
-			fields = []
+			text = component['DESCRIPTION']
 
 			if component.get('DTEND') and component['DTSTART'].dt != component['DTEND'].dt - timedelta(days=1):
-				fields.append({
-					'title': 'From',
-					'value': date_to_str(component['DTSTART'].dt),
-					'short': True
-				})
-				fields.append({
-					'title': 'To',
-					'value': date_to_str(component['DTEND'].dt - timedelta(days=1)),
-					'short': True
-				})
-			elif args.period != 'today':
-				fields.append({
-					'title': 'Date',
-					'value': date_to_str(component['DTSTART'].dt),
-					'short': True
-				})
-
-			fields.append({
-				'title': 'Description',
-				'value': component['DESCRIPTION']
-			})
+				text = "%s to %s" % (date_to_str(component['DTSTART'].dt), date_to_str(component['DTEND'].dt - timedelta(days=1)))
+			else:
+				text = date_to_str(component['DTSTART'].dt)
 
 			slack_msg['attachments'].append({
-				'fields': fields,
-				'text': component['SUMMARY'],
+				'text': text,
+				'title': component['SUMMARY'],
 			})
 		elif component.name == 'VCALENDAR':
 			slack_msg['text'] = '%s on %s' % (component['X-WR-CALNAME'], period_text)
